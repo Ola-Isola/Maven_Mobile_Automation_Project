@@ -4,4 +4,4 @@ target/
 failedTestScreenshots
 imagesToFolder
 maven/
-
+*.Ist
