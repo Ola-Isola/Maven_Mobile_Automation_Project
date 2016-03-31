@@ -1,3 +1,7 @@
 test-output
 .metadata/
-target
+target/
+failedTestScreenshots
+imagesToFolder
+maven/
+
