@@ -5,3 +5,6 @@ failedTestScreenshots
 imagesToFolder
 maven/
 *.Ist
+appiumServerLogs
+*txt
+*log
