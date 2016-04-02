@@ -8,4 +8,4 @@ maven/
 appiumServerLogs
 *txt
 *log
-*classpath
+*.classpath
