@@ -1,3 +1,11 @@
 test-output
 .metadata/
-target
+target/
+failedTestScreenshots
+imagesToFolder
+maven/
+*.Ist
+appiumServerLogs
+*txt
+*log
+*.classpath
