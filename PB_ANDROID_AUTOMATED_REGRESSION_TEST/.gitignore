@@ -5,6 +5,7 @@ build
 failedTestScreenshots
 *.txt
 *.jpg
+*.JPG
 target/
 
 
