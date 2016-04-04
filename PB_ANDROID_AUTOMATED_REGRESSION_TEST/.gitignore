@@ -4,6 +4,7 @@ build
 .metadata/
 failedTestScreenshots
 *.txt
+*.jpg
 target/
 
 
