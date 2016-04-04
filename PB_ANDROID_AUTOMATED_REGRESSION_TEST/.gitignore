@@ -5,5 +5,5 @@ build
 failedTestScreenshots
 *.txt
 target/
-*.log
+
 
