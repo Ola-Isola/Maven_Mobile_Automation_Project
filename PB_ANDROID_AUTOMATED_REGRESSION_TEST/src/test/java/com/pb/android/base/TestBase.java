@@ -107,7 +107,7 @@ public class TestBase {
 			  console.activateOptions();
 			  Logger.getRootLogger().addAppender(console);
 			  FileAppender appender = new FileAppender();
-			  appender.setFile(System.getProperty("user.dir") + "\\src\\main\\java\\com\\pb\\android\\testlogs\\"+class1.getSimpleName()+".log");
+			  appender.setFile(System.getProperty("user.dir") + "\\src\\main\\java\\com\\pb\\android\\testlogs\\"+class1.getSimpleName()+".txt");
 			  appender.setLayout(new PatternLayout("%d %-5p [%c{1}] %m%n"));
 			  appender.setAppend(false);	
 			  appender.activateOptions();					  

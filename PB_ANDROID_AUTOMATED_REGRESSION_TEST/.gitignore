@@ -2,8 +2,6 @@ test-output
 .metadata/
 failedTestScreenshots
 *.Ist
-*appmServerLogs
 *txt
-*log
 *.classpath
 *maven-status
