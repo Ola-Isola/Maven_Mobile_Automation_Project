@@ -1,9 +1,11 @@
 test-output
+bin
+build
 .metadata/
 failedTestScreenshots
-*.Ist
-*appmServerLogs
-*txt
-*log
-*.classpath
-*maven-status
+*.txt
+*.jpg
+*.JPG
+target/
+
+
