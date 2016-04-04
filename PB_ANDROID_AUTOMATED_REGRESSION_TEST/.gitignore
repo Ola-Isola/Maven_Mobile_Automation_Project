@@ -3,5 +3,7 @@ bin
 build
 .metadata/
 failedTestScreenshots
-*txt
+*.txt
+target/
+*.log
 
