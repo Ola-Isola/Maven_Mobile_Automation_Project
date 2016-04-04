@@ -1,11 +1,9 @@
 test-output
 .metadata/
-target/
 failedTestScreenshots
-imagesToFolder
-maven/
 *.Ist
-appiumServerLogs
+*appmServerLogs
 *txt
 *log
 *.classpath
+*maven-status
