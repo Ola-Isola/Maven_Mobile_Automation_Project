@@ -1,7 +1,7 @@
 test-output
+bin
+build
 .metadata/
 failedTestScreenshots
-*.Ist
 *txt
-*.classpath
-*maven-status
+
