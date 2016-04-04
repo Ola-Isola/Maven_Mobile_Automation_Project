@@ -1,6 +1,0 @@
-2016-04-02 22:00:42,888 DEBUG [Trial] Log Initialized to be generated for test : Trial
-2016-04-02 22:00:42,891 DEBUG [Trial] *************STARTING APPIUM SERVER WITH COMMANDLINE CLASS!!*****************
-2016-04-02 22:01:07,914 DEBUG [Trial] **************APPIUM SERVER STARTED SUCCESSFULLY USING COMMANDLINE CLASS!!*******************
-2016-04-02 22:01:07,968 DEBUG [Trial] Hello How Are You?
-2016-04-02 22:01:07,975 DEBUG [Trial] ***************STOPPING APPIUM SERVER USING COMMANDLINE CLASS***********************
-2016-04-02 22:01:17,976 DEBUG [Trial] *******************APPIUM SERVER STOPPED SUCCESSFULLY USING COMMANDLINE CLASS!!***************
