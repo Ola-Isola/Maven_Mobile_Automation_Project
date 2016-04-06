@@ -1,5 +1,9 @@
 package com.pb.android.base;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
@@ -9,6 +13,9 @@ import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
 
 
 public class TestBase {
@@ -22,6 +29,7 @@ public class TestBase {
 	public static String appiumServerLogsFilePath = System.getProperty("user.dir") + "\\appmServerLogs\\appiumserver.txt";
 	static String AppiumServerConfigurations = "--no-reset --local-timezone --log"+" "+ appiumServerLogsFilePath;
 	public static Logger logs = null;
+	public AndroidDriver<MobileElement> dr;
 	
 	
 	
@@ -93,8 +101,24 @@ public class TestBase {
 	
 	
 	//launch app
-	public void launchAppUnderTestUsingApkFile(){
-				
+	public void launchAppUnderTest(String deviceName, String platformVersion, String platformName,
+			String appPackageName, String appActivity, String appiumServerIpAddress, String appiumServerPortNumber) throws MalformedURLException{
+			
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		// DesiredCapabilities capabilities = DesiredCapabilities.android();
+		// capabilities.setCapability(CapabilityType.BROWSER_NAME, "");
+		capabilities.setCapability("deviceName", deviceName);
+		capabilities.setCapability("platformVersion",platformVersion);
+		capabilities.setCapability("platformName",platformName);
+		// capabilities.setCapability("app", app.getAbsolutePath());
+		capabilities.setCapability("appPackage", appPackageName);
+		capabilities.setCapability("appActivity",appActivity);
+
+		dr = new AndroidDriver<MobileElement>(new URL("http://"+appiumServerIpAddress+":"+appiumServerPortNumber+"/wd/hub"),
+				capabilities);
+
+		dr.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		
 	}
 	
 	
@@ -122,6 +146,11 @@ public class TestBase {
 		
 
 
+		public void quitDriverObject(AndroidDriver<MobileElement> dr){
+			
+			dr.quit();
+			logs.debug("Driver Quitted.");
+		}
 		
 		
 		
