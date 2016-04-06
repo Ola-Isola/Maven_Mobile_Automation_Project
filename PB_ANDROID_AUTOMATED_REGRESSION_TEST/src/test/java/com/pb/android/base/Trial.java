@@ -1,5 +1,8 @@
 package com.pb.android.base;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.List;
+
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
@@ -9,9 +12,19 @@ import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import io.appium.java_client.MobileDriver;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.android.AndroidDriver;
 
 
 // - See more at: http://software-testing-tutorials-automation.blogspot.co.uk/2015/12/start-stop-appium-server.html#sthash.9l7qhwsH.dpuf
@@ -44,13 +57,20 @@ import org.testng.annotations.Test;
 
 
 
-public class Trial {
+public class Trial extends TestBase{
  		
 	public static String appiumNodeExePath = System.getProperty("user.dir") + "\\appium\\Appium\\node.exe";
 	public static String appiumServerPath = System.getProperty("user.dir") + "\\appium\\Appium\\node_modules\\appium\\bin\\appium.js";
-	public static String appiumServerLogsFilePath = System.getProperty("user.dir") + "\\appiumServerLogs\\appiumserver.txt";
+	public static String appiumServerLogsFilePath = System.getProperty("user.dir") + "\\appmServerLogs\\appiumserver.txt";
 	static String AppiumServerConfigurations = "--no-reset --local-timezone --log"+" "+ appiumServerLogsFilePath;	
 	public static Logger logs = null;
+	public List<MobileElement> contactList;
+	//public AndroidDriver<MobileElement> dr;
+	//public WebDriver dr;
+	public String getTopName = null;
+	public String topName = null;
+    
+	
 	//static Process p;
 	//static String cmd = appiumNodeExePath + " " + appiumServerPath;   
 	
@@ -75,6 +95,7 @@ public class Trial {
 		
 		initLogs(this.getClass());
 		startAppiumMethod1();
+		launchAppUnderTest("Gpappy", "5.0.1", "Android", "com.whatsapp", "com.whatsapp.Main", "127.0.0.1", "4723");
 		
 	}
 	
@@ -82,10 +103,58 @@ public class Trial {
 	
 	
 	@Test
-	public void initializeLogs(){
+	public void initializeLogs() throws MalformedURLException, InterruptedException{
 		
 		logs.debug("Hello How Are You?");
 		
+	    Thread.sleep(5000L);
+		contactList = dr.findElements(By.id("com.whatsapp:id/conversations_row_contact_name"));
+		logs.debug("Total List Size "+contactList.size());
+		topName = contactList.get(0).getText();
+		String iyawomi = "Aya mi";
+		logs.debug("Top Name on list "+topName);
+		for(int i = 0; i <= contactList.size(); i++){
+			topName = contactList.get(0).getText();
+			logs.debug("Top Name on list "+topName);
+			String contactSelected = contactList.get(i).getText();				
+			logs.debug("I am clicking on contact name " + contactSelected);
+			contactList.get(i).click();
+			logs.debug("I have clicked on contact name " +contactSelected+ " assert if the contact opened name matches contact selected.");												
+			WebElement contactFriendOpened = dr.findElement(By.id("com.whatsapp:id/conversation_contact_name"));
+			String contactOpened = contactFriendOpened.getText();
+			Assert.assertEquals(contactSelected, contactOpened);
+			if(iyawomi.equalsIgnoreCase(contactOpened)){
+				
+				//send message to my wifey here.
+				dr.findElement(By.id("com.whatsapp:id/entry")).sendKeys("I love you tori torun - This is coming from my test program.");
+				WebDriverWait wait = new WebDriverWait(dr,5);
+				wait.until(ExpectedConditions.visibilityOf(dr.findElement(By.id("com.whatsapp:id/send"))));
+				WebElement sendButton = dr.findElement(By.id("com.whatsapp:id/send"));
+				TouchAction action = new TouchAction((MobileDriver)dr);
+				action.tap(sendButton).perform();
+				//dr.hideKeyboard();				        	
+		        logs.debug("I have sent my wife a message via my programm.");
+			}
+			logs.debug("I have asserted the text conatct displayed and will be returning to the main contact page.");
+			WebElement backFromConatctList  = dr.findElement(By.id("com.whatsapp:id/back"));
+			backFromConatctList.click();
+			logs.debug("I have returned to the contact list.");
+			
+			if(i == contactList.size()-1){					
+
+				@SuppressWarnings("rawtypes")
+				AndroidDriver android = (AndroidDriver)dr;
+				android.swipe(600, 1600, 600, 300, 3000);
+				getTopName = contactList.get(0).getText();
+				logs.debug("*******************if");
+				i=i-i;
+				if(getTopName.equalsIgnoreCase(topName)){
+					
+					logs.debug("I have clicked through all the lists of contacts and will be braking out of the loop.");
+			        break;
+				}
+			}					
+		}
 	}
 	
 	
@@ -126,7 +195,7 @@ public class Trial {
 					
 					//Set Port 
 					command.addArgument("--port"); 
-					command.addArgument("4723"); 
+					command.addArgument("4723"); //4444
 					
 					//Launch appium to no reset
 					command.addArgument("--no-reset"); 
