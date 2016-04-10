@@ -20,11 +20,11 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
+
 
 
 // - See more at: http://software-testing-tutorials-automation.blogspot.co.uk/2015/12/start-stop-appium-server.html#sthash.9l7qhwsH.dpuf
@@ -96,7 +96,9 @@ public class Trial extends TestBase{
 		initLogs(this.getClass());
 		startAppiumMethod1();
 		launchAppUnderTest("Gpappy", "5.0.1", "Android", "com.whatsapp", "com.whatsapp.Main", "127.0.0.1", "4723");
-		
+
+
+
 	}
 	
 	

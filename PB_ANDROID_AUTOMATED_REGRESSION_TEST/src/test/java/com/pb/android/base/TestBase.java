@@ -28,15 +28,15 @@ public class TestBase {
 	public static String appiumServerPath = System.getProperty("user.dir") + "\\appium\\Appium\\node_modules\\appium\\bin\\appium.js";
 	public static String appiumServerLogsFilePath = System.getProperty("user.dir") + "\\appmServerLogs\\appiumserver.txt";
 	static String AppiumServerConfigurations = "--no-reset --local-timezone --log"+" "+ appiumServerLogsFilePath;
-	public static Logger logs = null;
+	public Logger logs = null;
 	public AndroidDriver<MobileElement> dr;
 	
 	
 	
 	//start appium programmatically
-	public void startAppiumServer() throws ExecuteException, IOException, InterruptedException{
+	public void startAppiumServer(String appiumServerPortNumber, String serverIpAddress) throws ExecuteException, IOException, InterruptedException{
 		
-		System.out.println("*************STARTING APPIUM SERVER WITH COMMANDLINE CLASS!!*****************");
+		logs.debug("*************STARTING APPIUM SERVER WITH COMMANDLINE CLASS!!*****************");
 		
 		// Created object of apache CommandLine class. // It will start command prompt In background. 
 		CommandLine command = new CommandLine("cmd"); 
@@ -48,11 +48,11 @@ public class TestBase {
 		
 		//Set Server address 
 		command.addArgument("--address"); 
-		command.addArgument("127.0.0.1"); 
+		command.addArgument(serverIpAddress); 
 		
 		//Set Port 
 		command.addArgument("--port"); 
-		command.addArgument("4723"); 
+		command.addArgument(appiumServerPortNumber); 
 		
 		//Launch appium to no reset
 		command.addArgument("--no-reset"); 
@@ -70,8 +70,8 @@ public class TestBase {
 		DefaultExecutor executor = new DefaultExecutor();
 		executor.setExitValue(1); 
 		executor.execute(command, resultHandler); 
-		Thread.sleep(15000L);
-		System.out.println("**************APPIUM SERVER STARTED SUCCESSFULLY USING COMMANDLINE CLASS!!*******************");	
+		Thread.sleep(20000L);
+		logs.debug("**************APPIUM SERVER STARTED SUCCESSFULLY USING COMMANDLINE CLASS!!*******************");	
 		
 	}
 	
